@@ -7,8 +7,8 @@ const glob = require('glob');
 const spawnSync = require('../lib/spawn-sync');
 const publishRelease = require('publish-release');
 const releaseNotes = require('./lib/release-notes');
-const uploadToAzure = require('./lib/upload-to-azure-blob');
-const uploadLinuxPackages = require('./lib/upload-linux-packages');
+// const uploadToAzure = require('./lib/upload-to-azure-blob');
+// const uploadLinuxPackages = require('./lib/upload-linux-packages');
 
 const CONFIG = require('../config');
 
@@ -40,7 +40,7 @@ const assetsPath = argv.assetsPath || CONFIG.buildOutputPath;
 const assetsPattern =
   '/**/*(*.exe|*.zip|*.nupkg|*.tar.gz|*.rpm|*.deb|RELEASES*|atom-api.json)';
 const assets = glob.sync(assetsPattern, { root: assetsPath, nodir: true });
-const azureBlobPath = argv.azureBlobPath || `releases/v${releaseVersion}/`;
+// const azureBlobPath = argv.azureBlobPath || `releases/v${releaseVersion}/`;
 
 if (!assets || assets.length === 0) {
   console.error(`No assets found under specified path: ${assetsPath}`);
