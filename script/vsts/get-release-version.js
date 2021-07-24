@@ -36,14 +36,18 @@ async function getReleaseVersion() {
 
     let releaseNumber = 0;
     const baseVersion = appMetadata.version.split('-')[0];
-    if (releases && releases.length > 0) {
-      const latestRelease = releases.find(r => !r.draft);
-      const versionMatch = latestRelease.tag_name.match(
-        /^v?(\d+\.\d+\.\d+)-nightly(\d+)$/
-      );
+    const baseVersionString = `v${baseVersion}-nightly`;
 
-      if (versionMatch && versionMatch[1] === baseVersion) {
-        releaseNumber = parseInt(versionMatch[2]) + 1;
+    if (releases && releases.length > 0) {
+      for (const r of releases) {
+        if (!r.draft && r.tag_name.match(baseVersionString)) {
+          const previousNightlyIteration = r.tag_name.replace(
+            baseVersionString,
+            ''
+          );
+          releaseNumber = parseInt(previousNightlyIteration) + 1;
+          break;
+        }
       }
     }
 
