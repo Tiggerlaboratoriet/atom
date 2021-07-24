@@ -26,7 +26,7 @@ async function getReleaseVersion() {
   let releaseVersion = process.env.ATOM_RELEASE_VERSION || appMetadata.version;
   if (argv.nightly) {
     const releases = await request({
-      url: 'https://api.github.com/repos/atom/atom-nightly-releases/releases',
+      url: 'https://api.github.com/repos/DeeDeeG/atom-nightly-releases/releases',
       headers: {
         Accept: 'application/vnd.github.v3+json',
         'User-Agent': 'Atom Release Build'

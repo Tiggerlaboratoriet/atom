@@ -60,6 +60,8 @@ async function uploadArtifacts() {
     return;
   }
 
+  /*
+
   console.log(
     `Uploading ${
       assets.length
@@ -84,6 +86,8 @@ async function uploadArtifacts() {
       '\nNo Linux package repo name specified, skipping Linux package upload.'
     );
   }
+
+  */
 
   const oldReleaseNotes = releaseForVersion.releaseNotes;
   if (oldReleaseNotes) {
@@ -130,7 +134,7 @@ async function uploadArtifacts() {
     console.log(`Creating GitHub release v${releaseVersion}`);
     const release = await publishReleaseAsync({
       token: process.env.GITHUB_TOKEN,
-      owner: 'atom',
+      owner: 'DeeDeeG',
       repo: !isNightlyRelease ? 'atom' : 'atom-nightly-releases',
       name: CONFIG.computedAppVersion,
       notes: newReleaseNotes,

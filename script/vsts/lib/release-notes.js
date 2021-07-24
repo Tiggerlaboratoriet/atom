@@ -12,7 +12,7 @@ module.exports.getRelease = async function(releaseVersion, githubToken) {
   }
 
   const releases = await octokit.repos.getReleases({
-    owner: 'atom',
+    owner: 'DeeDeeG',
     repo: 'atom'
   });
   const release = releases.data.find(r => semver.eq(r.name, releaseVersion));
@@ -49,7 +49,7 @@ module.exports.generateForVersion = async function(
     oldVersionName = `v${parsedVersion.major}.${parsedVersion.minor - 1}.0`;
   } else {
     let releases = await octokit.repos.getReleases({
-      owner: 'atom',
+      owner: 'DeeDeeG',
       repo: 'atom'
     });
     oldVersion = 'v' + getPreviousRelease(releaseVersion, releases.data).name;
@@ -57,7 +57,7 @@ module.exports.generateForVersion = async function(
   }
 
   const allChangesText = await changelog.getChangelog({
-    owner: 'atom',
+    owner: 'DeeDeeG',
     repo: 'atom',
     fromTag: oldVersion,
     toTag: newVersionBranch,
@@ -110,12 +110,12 @@ module.exports.generateForNightly = async function(
 
   const latestCommit = latestCommitResult.stdout.toString().trim();
   const output = [
-    `### This nightly release is based on https://github.com/atom/atom/commit/${latestCommit} :atom: :night_with_stars:`
+    `### This nightly release is based on https://github.com/DeeDeeG/atom/commit/${latestCommit} :atom: :night_with_stars:`
   ];
 
   try {
     const releases = await octokit.repos.getReleases({
-      owner: 'atom',
+      owner: 'DeeDeeG',
       repo: 'atom-nightly-releases'
     });
 
@@ -124,7 +124,7 @@ module.exports.generateForNightly = async function(
 
     if (oldReleaseNotes) {
       const extractMatch = oldReleaseNotes.match(
-        /atom\/atom\/commit\/([0-9a-f]{5,40})/
+        /DeeDeeG\/atom\/commit\/([0-9a-f]{5,40})/
       );
       if (extractMatch.length > 1 && extractMatch[1]) {
         output.push('', '---', '');
@@ -139,7 +139,7 @@ module.exports.generateForNightly = async function(
           output.push('No changes have been included in this release');
         } else {
           output.push(
-            `Click [here](https://github.com/atom/atom/compare/${previousCommit}...${latestCommit}) to see the changes included with this release!`
+            `Click [here](https://github.com/DeeDeeG/atom/compare/${previousCommit}...${latestCommit}) to see the changes included with this release!`
           );
         }
       }
