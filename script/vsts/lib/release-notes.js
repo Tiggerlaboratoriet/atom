@@ -1,14 +1,17 @@
 const semver = require('semver');
-const octokit = require('@octokit/rest')();
+const { Octokit } = require('@octokit/rest');
 const changelog = require('pr-changelog');
 const childProcess = require('child_process');
 
 module.exports.getRelease = async function(releaseVersion, githubToken) {
+  let octokit;
+
   if (githubToken) {
-    octokit.authenticate({
-      type: 'oauth',
-      token: githubToken
+    octokit = new Octokit({
+      auth: githubToken
     });
+  } else {
+    octokit = new Octokit();
   }
 
   const releases = await octokit.repos.listReleases({
@@ -34,12 +37,15 @@ module.exports.generateForVersion = async function(
   const parsedVersion = semver.parse(releaseVersion);
   const newVersionBranch = getBranchForVersion(parsedVersion);
 
+  let octokit;
+
   if (githubToken) {
     changelog.setGithubAccessToken(githubToken);
-    octokit.authenticate({
-      type: 'oauth',
-      token: githubToken
+    octokit = new Octokit({
+      auth: githubToken
     });
+  } else {
+    octokit = new Octokit();
   }
 
   if (parsedVersion.prerelease && parsedVersion.prerelease[0] === 'beta0') {
