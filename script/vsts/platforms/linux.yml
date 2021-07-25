@@ -23,9 +23,9 @@ jobs:
       - template: templates/publish.yml
         parameters:
           artifacts:
-            - fileName: atom.x86_64.rpm
-              fileDir: $(Build.SourcesDirectory)/out
-              condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+            # - fileName: atom.x86_64.rpm
+            #   fileDir: $(Build.SourcesDirectory)/out
+            #   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
             - fileName: atom-amd64.deb
               fileDir: $(Build.SourcesDirectory)/out
               condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
