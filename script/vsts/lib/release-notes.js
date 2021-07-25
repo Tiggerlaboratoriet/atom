@@ -11,7 +11,7 @@ module.exports.getRelease = async function(releaseVersion, githubToken) {
     });
   }
 
-  const releases = await octokit.repos.getReleases({
+  const releases = await octokit.repos.listReleases({
     owner: 'DeeDeeG',
     repo: 'atom'
   });
@@ -48,7 +48,7 @@ module.exports.generateForVersion = async function(
     oldVersion = `${parsedVersion.major}.${parsedVersion.minor - 1}-releases`;
     oldVersionName = `v${parsedVersion.major}.${parsedVersion.minor - 1}.0`;
   } else {
-    let releases = await octokit.repos.getReleases({
+    let releases = await octokit.repos.listReleases({
       owner: 'DeeDeeG',
       repo: 'atom'
     });
@@ -114,7 +114,7 @@ module.exports.generateForNightly = async function(
   ];
 
   try {
-    const releases = await octokit.repos.getReleases({
+    const releases = await octokit.repos.listReleases({
       owner: 'DeeDeeG',
       repo: 'atom-nightly-releases'
     });
