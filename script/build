@@ -137,11 +137,8 @@ if (!argv.generateApiDocs) {
             console.log('Skipping creating debian package. Specify the --create-debian-package option to create it.'.gray)
           }
 
-          if (argv.createRpmPackage) {
-            createRpmPackage(packagedAppPath)
-          } else {
-            console.log('Skipping creating rpm package. Specify the --create-rpm-package option to create it.'.gray)
-          }
+          console.log('TEMPORARY -- REVERT ME -- Skipping creating rpm package. Ignoring the --create-rpm-package option if set.'.gray)
+
           break
         }
       }
