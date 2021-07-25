@@ -103,6 +103,8 @@ module.exports.generateForNightly = async function(
   releaseVersion,
   githubToken
 ) {
+  const octokit = new Octokit();
+
   const latestCommitResult = childProcess.spawnSync('git', [
     'rev-parse',
     '--short',
