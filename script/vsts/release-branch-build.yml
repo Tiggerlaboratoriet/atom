@@ -2,6 +2,7 @@ trigger:
   - master
   - 1.* # VSTS only supports wildcards at the end
   - electron-*
+  - test-updating-octokit_rest
 pr: none # no PR triggers
 
 jobs:
@@ -12,8 +13,8 @@ jobs:
   - template: lint.yml
 
   # Import OS-specific build definitions.
-  - template: platforms/windows.yml
-  - template: platforms/macos.yml
+  # - template: platforms/windows.yml
+  # - template: platforms/macos.yml
   - template: platforms/linux.yml
 
   - job: UploadArtifacts
@@ -22,10 +23,10 @@ jobs:
 
     dependsOn:
       - GetReleaseVersion
-      - Lint
-      - Windows_tests
+      # - Lint
+      # - Windows_tests
       - Linux
-      - macOS_tests
+      # - macOS_tests
 
     variables:
       ReleaseVersion: $[ dependencies.GetReleaseVersion.outputs['Version.ReleaseVersion'] ]
@@ -59,7 +60,7 @@ jobs:
           ATOM_RELEASES_S3_BUCKET: $(ATOM_RELEASES_S3_BUCKET)
           PACKAGE_CLOUD_API_KEY: $(PACKAGE_CLOUD_API_KEY)
         displayName: Create Draft Release
-        condition: and(succeeded(), eq(variables['Atom.AutoDraftRelease'], 'true'), eq(variables['IsReleaseBranch'], 'true'))
+        condition: succeeded()
 
       - script: |
           node $(Build.SourcesDirectory)/script/vsts/upload-artifacts.js --assets-path "$(System.ArtifactsDirectory)" --azure-blob-path "vsts-artifacts/$(Build.BuildId)/"
