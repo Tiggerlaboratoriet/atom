@@ -8,10 +8,13 @@ module.exports.getRelease = async function(releaseVersion, githubToken) {
 
   if (githubToken) {
     octokit = new Octokit({
-      auth: githubToken
+      auth: githubToken,
+      userAgent: 'release-notes.js getRelease function'
     });
   } else {
-    octokit = new Octokit();
+    octokit = new Octokit({
+      userAgent: 'release-notes.js getRelease function no token'
+    });
   }
 
   const releases = await octokit.repos.listReleases({
@@ -42,10 +45,13 @@ module.exports.generateForVersion = async function(
   if (githubToken) {
     changelog.setGithubAccessToken(githubToken);
     octokit = new Octokit({
-      auth: githubToken
+      auth: githubToken,
+      userAgent: 'release-notes.js generateForVersion function'
     });
   } else {
-    octokit = new Octokit();
+    octokit = new Octokit({
+      userAgent: 'release-notes.js generateForVersion function no token'
+    });
   }
 
   if (parsedVersion.prerelease && parsedVersion.prerelease[0] === 'beta0') {
@@ -103,7 +109,9 @@ module.exports.generateForNightly = async function(
   releaseVersion,
   githubToken
 ) {
-  const octokit = new Octokit();
+  const octokit = new Octokit({
+    userAgent: 'release-notes.js generateForNightly function no token'
+  });
 
   const latestCommitResult = childProcess.spawnSync('git', [
     'rev-parse',
